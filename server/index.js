@@ -79,8 +79,8 @@ const verifyJWT = (req, res, next) => {
 };
 
 app.get("/isUserAuth", verifyJWT, (req,res) => {
-    res.send("You are authenticated!")
-})
+    res.send("You are authenticated!");
+});
 
 app.get("/login", (req, res) => {
     if(req.session.user) {
@@ -114,11 +114,11 @@ app.post('/login', (req,res)=> {
                     req.session.user = result;
                     res.json({auth: true, token: token, result: result});
                 } else {
-                    res.send({message: "Wrong username/password!"});
+                    res.json({auth: false, message: "Wrong username/password!"});
                 }
         });
         } else {
-            res.send({message: "User doesn't exist!"});
+            res.json({auth: false, message: "No user exists"});
         }
        
     }

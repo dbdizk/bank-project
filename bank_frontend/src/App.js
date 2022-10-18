@@ -3,13 +3,13 @@ import Axios from 'axios';
 
 function App() {
 
-  const [usernameReg, setUsernameReg] = useState('')
-  const [passwordReg, setPasswordReg] = useState('')
+  const [usernameReg, setUsernameReg] = useState('');
+  const [passwordReg, setPasswordReg] = useState('');
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [loginStatus, setLoginStatus] = useState('')
+  const [loginStatus, setLoginStatus] = useState(false);
 
   Axios.defaults.withCredentials = true;
 
@@ -24,17 +24,33 @@ function App() {
   const login = () => {
     Axios.post('http://localhost:3306/login', {username: username, password: password,
   }).then((response) => {
-    if (response.data.message) {
-      setLoginStatus(response.data.message);
+    console.log(response);
+    if (!response.data.auth) {
+      setLoginStatus(false);
     } else {
-      setLoginStatus(response.data[0].username);
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      setLoginStatus(true);
     }
     
   });
   };
 
+
+  const userAuthenticated = () => {
+    Axios.get("http://localhost:3306/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      }
+    }).then((response)=> {
+      console.log(response);
+    }
+    );
+  };
+
   useEffect(()=> {
     Axios.get("http://localhost:3306/login").then((response) => {
+      console.log(response);
     if (response.data.loggedIn == true) {    
     setLoginStatus(response.data.user[0].username);
     }
@@ -71,7 +87,9 @@ function App() {
         <button onClick={login}>Login</button>
       </div>
 
-      <h1>{loginStatus}</h1>
+      {loginStatus && (
+        <button onClick={userAuthenticated}>Check if authenticated</button>
+      )}
     </div>
 
   );
