@@ -7,6 +7,8 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const jwt = require('jsonwebtoken');
+
 const app = express();
 
 app.use(express.json());
@@ -59,6 +61,26 @@ app.post('/register', (req, res)=> {
     
 });
 
+const verifyJWT = (req, res, next) => {
+    const token = req.headers["x-access-token"];
+
+    if (!token) {
+        res.send("Need a token!");
+    } else {
+        jwt.verify(token, "bankSecret", (err, decoded) =>{
+            if (err) {
+                res.json({auth: false, message: "You failed to authenticate"});
+            } else {
+                req.userId = decoded.id;
+                next();
+            }
+        });
+    }
+};
+
+app.get("/isUserAuth", verifyJWT, (req,res) => {
+    res.send("You are authenticated!")
+})
 
 app.get("/login", (req, res) => {
     if(req.session.user) {
@@ -85,9 +107,12 @@ app.post('/login', (req,res)=> {
         if (result.length > 0) {
             bcrypt.compare(password, result[0].password, (error, response) => {
                 if (response) {
+                    const id = result[0].id;
+                    const token = jwt.sign({id}, "bankSecret", {
+                        expiresIn: 300,
+                    });
                     req.session.user = result;
-                    console.log(req.session.user);
-                    res.send(result);
+                    res.json({auth: true, token: token, result: result});
                 } else {
                     res.send({message: "Wrong username/password!"});
                 }

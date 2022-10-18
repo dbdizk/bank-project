@@ -25,7 +25,7 @@ function App() {
     Axios.post('http://localhost:3306/login', {username: username, password: password,
   }).then((response) => {
     if (response.data.message) {
-      setLoginStatus(response.data.message)
+      setLoginStatus(response.data.message);
     } else {
       setLoginStatus(response.data[0].username);
     }
