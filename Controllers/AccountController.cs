@@ -11,6 +11,7 @@ namespace bank_project.Controllers
             Db = db;
         }
 
+
         // GET api/account
         [HttpGet]
         public async Task<IActionResult> GetLatest()
