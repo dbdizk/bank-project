@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
 const jwt = require('jsonwebtoken');
 
 const app = express();
@@ -17,6 +16,8 @@ app.use(cors({
     methods: ["GET", "POST"],
     credentials: true
 }));
+
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -89,6 +90,21 @@ app.get("/login", (req, res) => {
         res.send({loggedIn: false});
     }
 });
+
+app.get("/myAccounts", verifyJWT, (req,res) => {
+    const logged = localStorage.getItem("logged")
+
+    db.query("SELECT * FROM account WHERE owner =?;",
+    logged,
+    (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+      
+    });
 
 app.post('/login', (req,res)=> {
 
