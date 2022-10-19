@@ -30,3 +30,11 @@ C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\bank_frontend\package
 C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\bank_frontend\package.json
 C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\bank_frontend\public\manifest.json
 C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\package-lock.json
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\package.json
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\System.Web.Cors.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\System.Web.Http.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\System.Web.Http.Cors.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\bootcamp_2022\bankproject\bank-project\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

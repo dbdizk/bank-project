@@ -1,8 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http.Cors;
+
+
 
 namespace bank_project.Controllers
 {
+
+    [EnableCors(origins: "http://localhost:3000",headers: "*",methods: "*")]
+
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {

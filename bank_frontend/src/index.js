@@ -4,10 +4,56 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+class AccountComponent extends React.Component{
+  constructor(props){
+     super(props);
+
+     this.state={
+       account:[]
+     };
+   }
+   componentDidMount() {
+     fetch("https://localhost:7055/api/account")
+       .then(res => res.json())
+       .then(
+         (result) => {
+           this.setState({
+             account: result
+           });
+         }
+       );
+   }
+
+   render(){
+     return (
+       <div>
+         <h2>Account Data</h2>
+         <table>
+           <thead>
+             <tr>
+               <th>ID</th>
+               <th>Balance</th>
+             </tr>
+           </thead>
+           <tbody>
+             {this.state.account.map(acc=>(
+               <tr key={acc.id}>
+                 <td>{acc.id}</td>
+                 <td>{acc.balance}</td>
+               </tr>))}
+           </tbody>
+         </table>
+       </div>
+     );
+   }
+ }
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <AccountComponent />
   </React.StrictMode>
 );
 
